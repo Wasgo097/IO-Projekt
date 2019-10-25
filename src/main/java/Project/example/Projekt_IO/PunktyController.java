@@ -18,7 +18,7 @@ public class PunktyController {
     String index(){
         return"<form method='POST' action='http://localhost:8080/punkty/users'>" +
                 "<input type='text' name='name'/>" +
-                "<input type='submit' value='Submit'>" +
+                "<br/><input type='submit' value='Submit'>" +
                 "</form>";
     }
     @RequestMapping(value = "/users",method={ RequestMethod.GET})
