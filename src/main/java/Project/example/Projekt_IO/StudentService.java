@@ -3,22 +3,15 @@ package Project.example.Projekt_IO;
 import io.vavr.collection.List;
 
 public class StudentService {
-
     private List<Student> students = List.empty();
-
-    List<Student> getStudents() {
-        //1 test
-        //return List.empty();
-        //3 test
+    int id=1;
+    public List<Student> getStudents() {
         return this.students;
     }
-
-    public boolean addStudent(NewStudnet stud){
-//        if(students!=null){
-//            students.append(new Student(id,name,number,grupa));
-//            return true;
-//        }
-//        else return false;
-        throw new UnsupportedOperationException();
+    public Student addStudent(NewStudent stud){
+        Student temp=new Student(id,stud.name,stud.number,stud.grupa);
+        id++;
+        students=students.push(temp);
+        return temp;
     }
 }
