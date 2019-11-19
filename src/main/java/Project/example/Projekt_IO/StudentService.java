@@ -1,17 +1,28 @@
 package Project.example.Projekt_IO;
-
+import Project.example.Projekt_IO.db.StudentRepository;
+import Project.example.Projekt_IO.db.StudentRow;
 import io.vavr.collection.List;
-
+import org.springframework.stereotype.Service;
+import java.util.function.Function;
+@Service
 public class StudentService {
-    private List<Student> students = List.empty();
-    int id=1;
+    private final StudentRepository repository;
     public List<Student> getStudents() {
-        return this.students;
+        return List.ofAll(this.repository.findAll()).map(getStudentRowStudentFunction());
     }
-    public Student addStudent(NewStudent stud){
-        Student temp=new Student(id,stud.name,stud.number,stud.grupa);
-        id++;
-        students=students.push(temp);
-        return temp;
+    private Function<StudentRow, Student> getStudentRowStudentFunction() {
+        return dbObj->
+                new Student(
+                        dbObj.getId(),
+                        dbObj.getName(),
+                        dbObj.getNumber(),
+                        dbObj.getGroup());
+    }
+    public Student addStudent(final NewStudent stud){
+        StudentRow created=this.repository.save(new StudentRow(stud.name,stud.number,stud.grupa));
+        return getStudentRowStudentFunction().apply(created);
+    }
+    public StudentService(StudentRepository repository) {
+        this.repository=repository;
     }
 }

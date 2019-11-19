@@ -10,8 +10,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/punkty")
 public class PunktyController {
-    StudentService service =new StudentService();
-    public PunktyController(){}
+    private final StudentService service;
+    public PunktyController(StudentService service) {
+        this.service = service;
+    }
     @RequestMapping("/index")
     String index(){
         return"<form method='POST' action='http://localhost:8080/punkty/users'>" +
